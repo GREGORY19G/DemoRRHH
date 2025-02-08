@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DemoRRHH.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoRRHH.Data
 {
@@ -9,6 +10,6 @@ namespace DemoRRHH.Data
         {
         }
 
-        //public DbSet<Employee> Employees { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
     }
 }
