@@ -340,3 +340,4 @@ C:\Users\Grego\Documents\GitHub\DemoRRHH\DemoRRHH\obj\Debug\net8.0\refint\DemoRR
 C:\Users\Grego\Documents\GitHub\DemoRRHH\DemoRRHH\obj\Debug\net8.0\DemoRRHH.pdb
 C:\Users\Grego\Documents\GitHub\DemoRRHH\DemoRRHH\obj\Debug\net8.0\DemoRRHH.genruntimeconfig.cache
 C:\Users\Grego\Documents\GitHub\DemoRRHH\DemoRRHH\obj\Debug\net8.0\ref\DemoRRHH.dll
+C:\Users\Grego\Documents\GitHub\DemoRRHH\DemoRRHH\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
