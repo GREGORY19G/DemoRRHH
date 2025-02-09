@@ -9,6 +9,5 @@ namespace DemoRRHH.ViewModel
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese su contraseña")]
         public string Password { get; set; } = string.Empty;
-
     }
 }

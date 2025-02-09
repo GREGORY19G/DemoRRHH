@@ -1,0 +1,79 @@
+﻿@page "/register"
+
+@using DemoRRHH.Data
+@using DemoRRHH.Models.Entities
+@using DemoRRHH.ViewModel
+
+@inject ApplicationDbContext applicationDbContext;
+@inject NavigationManager navigationManager;
+
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 600px;">
+        <EditForm Model="RegisterInput" method="post" OnValidSubmit="RegisterUser" FormName="register">
+            <DataAnnotationsValidator />
+            <h2 class="text-center">Register</h2>
+            <ValidationSummary class="text-danger" role="alert" />
+            <hr />
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="RegisterInput.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="user1234" />
+                <label for="userName">User Name</label>
+                <ValidationMessage For="() => RegisterInput.Username" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="RegisterInput.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+                <label for="email">Email</label>
+                <ValidationMessage For="() => RegisterInput.Email" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="password" @bind-Value="RegisterInput.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label for="password">Password</label>
+                <ValidationMessage For="() => RegisterInput.Password" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="password" @bind-Value="RegisterInput.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label for="confirm-password">Confirm Password</label>
+                <ValidationMessage For="() => RegisterInput.ConfirmPassword" class="text-danger" />
+            </div>
+            <div class="mb-3 text-center">
+                <span class="text-danger">@errorMessage</span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    private RegisterInputModel RegisterInput { get; set; } = new();
+    private string? errorMessage;
+
+    private async Task RegisterUser()
+    {
+        errorMessage = string.Empty;
+
+        var userAccount = applicationDbContext.UserAccounts.Where(x => x.Username == RegisterInput.Username).FirstOrDefault();
+        if (userAccount != null)
+        {
+            errorMessage = "The user is currently exist";
+            return;
+        }
+        if (RegisterInput.Password != RegisterInput.ConfirmPassword)
+        {
+            errorMessage = "The passwords are not the same";
+            return;
+        }
+        applicationDbContext.UserAccounts.Add(new UserAccount
+            {
+                Username = RegisterInput.Username,
+                Password = RegisterInput.Password,
+                Role = "user",
+                Email = RegisterInput.Email,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            });
+        await applicationDbContext.SaveChangesAsync();
+        navigationManager.NavigateTo("/login");
+    }
+}
